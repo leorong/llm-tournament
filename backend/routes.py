@@ -93,10 +93,12 @@ def register_routes(app):
         if not question:
             return jsonify({"error": "Question not found"}), 404
 
-        prompts = question.prompts
+        # Sort prompts by score in descending order
+        sorted_prompts = sorted(question.prompts, key=lambda prompt: prompt.score, reverse=True)
+
 
         result = []
-        for prompt in prompts:
+        for prompt in sorted_prompts:
             result.append({
                 "id": prompt.id,
                 "text": prompt.text,
